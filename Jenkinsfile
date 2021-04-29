@@ -24,6 +24,13 @@ pipeline {
 
         stage('Publish') {
             steps {
+                // remove jenkins file
+                sh 'rm -rf app/Jenkinsfile app/.git';
+                // create project path
+                sh "sudo mkdir -p /var/www/alunos/${env.PROJECT_NAME} && sudo chown jenkins:www-data /var/www/alunos/${env.PROJECT_NAME} -R";
+                // create webserver path
+                sh "sudo cp 000-default.conf /etc/apache2/sites-available/000-default.conf && sudo chown root:root /etc/apache2/sites-available/000-default.conf";
+                // update list sites
     sh """
 #!/bin/bash
 sudo echo "" > /var/www/sites.conf
@@ -40,12 +47,6 @@ done
 sudo echo "" > /var/www/html/list.html
 sudo echo "\$LIST_SITES" > /var/www/html/list.html
     """
-                // remove jenkins file
-                sh 'rm -rf app/Jenkinsfile app/.git';
-                // create project path
-                sh "sudo mkdir -p /var/www/alunos/${env.PROJECT_NAME} && sudo chown jenkins:www-data /var/www/alunos/${env.PROJECT_NAME} -R";
-                // create webserver path
-                sh "sudo cp 000-default.conf /etc/apache2/sites-available/000-default.conf && sudo chown root:root /etc/apache2/sites-available/000-default.conf";
                 // clear project
                 sh "sudo rm -rf /var/www/alunos/${env.PROJECT_NAME}/*";
                 // deploy project
