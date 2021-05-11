@@ -5,7 +5,7 @@ pipeline {
         stage("Warm Up") {
             steps {
                 script {
-                    currentBuild.displayName = "#${env.BUILD_NUMBER} - ${env.PROJECT_NAME}..."
+                    currentBuild.displayName = "#${env.BUILD_NUMBER} [ ${env.PROJECT_NAME} ]"
                 }
             }
         }
@@ -89,9 +89,6 @@ sudo echo "\$LIST_SITES" > /var/www/html/list.html
                     echo "================>>>>>>>   ${env.PROJECT_NAME}"
                     echo "================>>>>>>>   Successfully published !!!"
                     echo "===================================================================================="
-
-                    currentBuild.result = "SUCCESS"
-                    currentBuild.displayName = "#${env.BUILD_NUMBER} [ ${env.PROJECT_NAME} ]"
                 }
             }
         }
