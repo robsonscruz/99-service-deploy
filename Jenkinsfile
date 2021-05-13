@@ -2,17 +2,11 @@ pipeline {
     agent any
 
     stages{
-        stage("Warm Up") {
-            steps {
-                script {
-                    currentBuild.displayName = "#${env.BUILD_NUMBER} [ ${env.PROJECT_NAME} ]"
-                }
-            }
-        }
-
         stage('Clone') {
             steps {
                 script {
+                    currentBuild.displayName = "#${env.BUILD_NUMBER} [ ${env.PROJECT_NAME} ]"
+
                     checkout scm
                     checkout poll:true, scm: [$class: 'GitSCM',
                     branches: [[name: 'refs/heads/master']],
