@@ -38,6 +38,7 @@ pipeline {
                     def status = sh(returnStatus: true, script: "if ! grep -q \"<!--teste_ok-->\" app/index.html; then echo \"ARQUIVO NÃO TEM ESTRUTURA DE TESTE VÁLIDO!\"; exit 1; fi")
                     if (status != 0) {
                         currentBuild.result = 'FAILED'
+                        error "Failed, ARQUIVO NÃO TEM ESTRUTURA DE TESTE VÁLIDO..."
                     }
                 }
 
